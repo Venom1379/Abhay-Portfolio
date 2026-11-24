@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abhay Patel - Resume | Full Stack Web Developer</title>
+
+  <!-- Immediate Theme Initialization -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('abhay-portfolio-theme');
+      if (savedTheme === 'light' || (!savedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- html2pdf.js for direct high-quality PDF download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    /* =========================================================
+       CSS RESET & BASE CONFIGURATION
+       ========================================================= */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :root {
+      --primary: #111827;       /* Deep slate/black */
+      --secondary: #2563eb;     /* Professional accent blue */
+      --text-main: #1f2937;     /* High contrast body text */
+      --text-muted: #4b5563;    /* Muted secondary text */
+      --text-light: #6b7280;    /* Meta dates & subtext */
+      --border-color: #111827;  /* Clean solid borders */
+      --border-subtle: #e5e7eb; /* Subtle dividers */
+      --tag-bg: #f3f4f6;        /* Skill tag background */
+      --tag-border: #d1d5db;    /* Skill tag border */
+      --tag-text: #111827;      /* Skill tag text */
+      --bg-screen: #0b0f19;     /* Modern dark ambient screen background */
+      --paper-bg: #ffffff;      /* Pure white resume paper */
+      --action-bar-bg: rgba(17, 24, 39, 0.92);
+      --action-bar-border: rgba(255, 255, 255, 0.12);
+      --action-text: #f3f4f6;
+      --btn-secondary-bg: rgba(255, 255, 255, 0.08);
+      --btn-secondary-border: rgba(255, 255, 255, 0.15);
+      --btn-secondary-text: #f3f4f6;
+    }
+
+    [data-theme="light"] {
+      --bg-screen: #f1f5f9;     /* Soft slate 100 screen background */
+      --action-bar-bg: rgba(255, 255, 255, 0.95);
+      --action-bar-border: rgba(0, 0, 0, 0.1);
+      --action-text: #0f172a;
+      --btn-secondary-bg: #e2e8f0;
+      --btn-secondary-border: #cbd5e1;
+      --btn-secondary-text: #1e293b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-screen);
+      color: var(--text-main);
+      line-height: 1.42;
+      font-size: 13px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 12px 60px;
+      transition: background-color 0.3s ease;
+    }
+
+    /* =========================================================
+       TOP CONTROL BAR (Screen Only - Hidden in Print)
+       ========================================================= */
+    .action-bar {
+      position: sticky;
+      top: 16px;
+      z-index: 1000;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--action-bar-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--action-bar-border);
+      padding: 12px 20px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 820px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      transition: all 0.3s ease;
+    }
+
+    .action-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--action-text);
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.16);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    [data-theme="dark"] .badge-status {
+      color: #34d399;
+    }
+
+    .badge-status i {
+      font-size: 8px;
+    }
+
+    .action-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Theme Switcher in Resume Bar */
+    .theme-toggle-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--btn-secondary-bg);
+      border: 1px solid var(--btn-secondary-border);
+      color: var(--action-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--secondary);
+    }
+
+    .sun-icon { display: none; color: #d97706; }
+    .moon-icon { display: inline-block; }
+    [data-theme="light"] .sun-icon { display: inline-block; }
+    [data-theme="light"] .moon-icon { display: none; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--btn-secondary-bg);
+      color: var(--btn-secondary-text);
+      border: 1px solid var(--btn-secondary-border);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      border-color: var(--secondary);
+    }
+
+    /* =========================================================
+       RESUME PAPER CONTAINER (A4 Ratio - Enhancv Architecture)
+       ========================================================= */
+    .resume-wrapper {
+      width: 100%;
+      max-width: 820px;
+      background: var(--paper-bg);
+      border-radius: 4px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+      padding: 40px 42px 36px;
+      color: var(--text-main);
+      position: relative;
+    }
+
+    /* HEADER */
+    .header {
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .header-name {
+      font-size: 29px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .header-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.2px;
+      margin-bottom: 10px;
+    }
+
+    .header-contact {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .header-contact a,
+    .header-contact span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+
+    .header-contact a:hover {
+      color: var(--secondary);
+    }
+
+    .header-contact i {
+      font-size: 11px;
+      color: var(--primary);
+    }
+
+    /* 2-COLUMN GRID SYSTEM */
+    .resume-grid {
+      display: grid;
+      grid-template-columns: 59% 38%;
+      column-gap: 3%;
+      row-gap: 20px;
+    }
+
+    .column-left {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .column-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* SECTION HEADERS (Matches Zoe Thompson Enhancv style) */
+    .section-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--primary);
+      padding-bottom: 4px;
+      border-bottom: 1.5px solid var(--border-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* SUMMARY TEXT */
+    .summary-text {
+      font-size: 11.8px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      text-align: justify;
+    }
+
+    /* EXPERIENCE BLOCK */
+    .experience-item {
+      margin-bottom: 10px;
+    }
+
+    .item-header {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 6px;
+    }
+
+    .item-role {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.25;
+    }
+
+    .item-company {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--secondary);
+      margin-top: 2px;
+    }
+
+    .item-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 11px;
+      color: var(--text-light);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    .item-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .bullet-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .bullet-list li {
+      position: relative;
+      padding-left: 14px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .bullet-list li::before {
+      content: "•";
+      position: absolute;
+      left: 2px;
+      top: -1px;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .bullet-list li strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* EDUCATION BLOCK */
+    .edu-item {
+      margin-bottom: 9px;
+    }
+
+    .edu-degree {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .edu-school {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .edu-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 10.8px;
+      color: var(--text-light);
+      margin: 2px 0 4px;
+      font-weight: 500;
+    }
+
+    .edu-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* TRAINING / COURSES GRID */
+    .training-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .training-card {
+      background: #f9fafb;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 6px 9px;
+    }
+
+    .training-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.25;
+    }
+
+    .training-sub {
+      font-size: 10px;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+
+    /* RIGHT COLUMN: KEY ACHIEVEMENTS */
+    .achievement-item {
+      margin-bottom: 9px;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .achievement-icon {
+      margin-top: 1px;
+      color: var(--primary);
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .achievement-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .achievement-title {
+      font-size: 11.8px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.25;
+    }
+
+    .achievement-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.38;
+      margin-top: 2px;
+    }
+
+    /* RIGHT COLUMN: SKILLS (Exact Zoe Thompson Enhancv Box Grid Style) */
+    .skills-grid-proper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px 7px;
+    }
+
+    .skill-box {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #111827;
+      background: #ffffff;
+      border: 1px solid #111827;
+      padding: 4px 7px;
+      border-radius: 3px;
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 25px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      transition: all 0.15s ease;
+    }
+
+    .skill-box:hover {
+      background: #f3f4f6;
+    }
+
+    .skill-box.highlight {
+      background: #eff6ff;
+      border-color: #2563eb;
+      color: #1d4ed8;
+      font-weight: 800;
+    }
+
+    .skill-box.full-width {
+      grid-column: span 2;
+    }
+
+    /* RIGHT COLUMN: INTERESTS */
+    .interest-item {
+      margin-bottom: 8px;
+    }
+
+    .interest-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.25;
+    }
+
+    .interest-desc {
+      font-size: 10.8px;
+      color: var(--text-muted);
+      line-height: 1.35;
+      margin-top: 1px;
+    }
+
+    /* FOOTER (Subtle Enhancv Watermark Bar) */
+    .resume-footer {
+      margin-top: 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9.5px;
+      color: var(--text-light);
+    }
+
+    .resume-footer a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* =========================================================
+       PRINT OPTIMIZATIONS (STRICT A4 EXACT FIT)
+       ========================================================= */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 8mm 10mm; /* Clean uniform margin */
+      }
+
+      *, *::before, *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        color: #111827 !important;
+        display: block !important;
+      }
+
+      .action-bar,
+      .no-print {
+        display: none !important;
+      }
+
+      .resume-wrapper {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+
+      /* Prevent any awkward page breaks */
+      .header,
+      .experience-item,
+      .edu-item,
+      .achievement-item,
+      .section-title,
+      .training-card {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+      }
+
+      .header-name {
+        font-size: 26px !important;
+      }
+
+      .resume-footer {
+        margin-top: 10px !important;
+        padding-top: 6px !important;
+      }
+    }
+
+    /* Responsive preview for small screens */
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 12px 8px 40px;
+      }
+      .action-bar {
+        position: static;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .action-right {
+        justify-content: stretch;
+      }
+      .action-right .btn {
+        flex: 1;
+        justify-content: center;
+      }
+      .resume-wrapper {
+        padding: 24px 18px;
+      }
+      .resume-grid {
+        grid-template-columns: 1fr;
+        row-gap: 20px;
+      }
+      .training-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       SCREEN TOOLBAR (Hidden in Print)
+       ========================================================= -->
+  <header class="action-bar no-print">
+    <div class="action-left">
+      <span class="badge-status"><i class="fa-solid fa-circle"></i> A4 PDF Ready</span>
+      <span>Abhay Patel - Resume</span>
+    </div>
+    <div class="action-right">
+      <button class="theme-toggle-btn" id="resumeThemeToggle" aria-label="Toggle Theme" title="Toggle Screen Background (Dark / Light)">
+        <i class="fa-solid fa-moon moon-icon"></i>
+        <i class="fa-solid fa-sun sun-icon"></i>
+      </button>
+      <a href="index.html" class="btn btn-secondary">
+        <i class="fa-solid fa-arrow-left"></i> Portfolio
+      </a>
+      <button onclick="downloadDirectPDF()" class="btn btn-secondary" title="Direct PDF Download via JS">
+        <i class="fa-solid fa-file-arrow-down"></i> Quick PDF
+      </button>
+      <button onclick="window.print()" class="btn btn-primary" title="Print or Save to PDF">
+        <i class="fa-solid fa-print"></i> Print / Save as PDF
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       MAIN RESUME CANVAS (Enhancv 2-Column Standard)
+       ========================================================= -->
+  <main class="resume-wrapper" id="resume-container">
+
+    <!-- HEADER SECTION -->
+    <header class="header">
+      <h1 class="header-name">ABHAY PATEL</h1>
+      <div class="header-title">
+        Full Stack Web Developer | PHP &amp; Laravel | Node.js | n8n Automation | Shopify
+      </div>
+      <div class="header-contact">
+        <span><i class="fa-solid fa-phone"></i> +91 9106559022</span>
+        <a href="mailto:abhaypatel07578@gmail.com"><i class="fa-solid fa-envelope"></i> abhaypatel07578@gmail.com</a>
+        <span><i class="fa-solid fa-location-dot"></i> Surat, Gujarat, India</span>
+        <a href="https://www.abhayportfolio.site" target="_blank"><i class="fa-solid fa-globe"></i> www.abhayportfolio.site</a>
+        <a href="https://github.com" target="_blank"><i class="fa-brands fa-github"></i> github.com/abhaypatel</a>
+      </div>
+    </header>
+
+    <!-- 2-COLUMN BODY -->
+    <div class="resume-grid">
+
+      <!-- =====================================================
+           LEFT COLUMN: Summary, Experience, Education, Training
+           (NO PROJECTS SECTION AS REQUESTED)
+           ===================================================== -->
+      <section class="column-left">
+
+        <!-- SUMMARY -->
+        <article class="resume-section">
+          <h2 class="section-title">SUMMARY</h2>
+          <p class="summary-text">
+            Results-driven Web Developer with 4+ years of hands-on expertise building scalable, high-performance web applications and automated digital workflows. Highly proficient in backend architecture with PHP (OOP), Laravel, CodeIgniter, and Node.js, combined with modern frontend technologies and database optimization. Expert at engineering custom e-commerce storefronts on <strong>Shopify</strong> and architecting end-to-end webhook/API automations via <strong>n8n</strong> to streamline business operations and elevate client growth.
+          </p>
+        </article>
+
+        <!-- EXPERIENCE -->
+        <article class="resume-section">
+          <h2 class="section-title">EXPERIENCE</h2>
+
+          <div class="experience-item">
+            <div class="item-header">
+              <div class="item-role">Web Developer</div>
+              <div class="item-company">Softnoesis Private Limited</div>
+              <div class="item-meta">
+                <span><i class="fa-regular fa-calendar"></i> 01/2024 - Present</span>
+                <span><i class="fa-solid fa-location-dot"></i> Surat, Gujarat</span>
+              </div>
+            </div>
+
+            <ul class="bullet-list">
+              <li>
+                <strong>Architected &amp; Deployed Scalable Web Platforms:</strong> Engineered full-stack web solutions utilizing Laravel, PHP, Node.js, and MySQL, modernizing legacy systems to achieve a <strong>35% decrease</strong> in server response latency.
+              </li>
+              <li>
+                <strong>API Architecture &amp; Third-Party Integrations:</strong> Built secure RESTful APIs, OAuth 2.0 flows, and webhook endpoints connecting collaboration systems like Slack, Jira, and Monday.com for automated tracking.
+              </li>
+              <li>
+                <strong>Workflow Automation via n8n:</strong> Designed multi-step automated data pipelines and event triggers using <strong>n8n</strong>, eliminating 25+ hours of manual data synchronization monthly.
+              </li>
+              <li>
+                <strong>Shopify E-Commerce Customization:</strong> Developed custom Shopify storefront features, Liquid template extensions, and dynamic checkout experiences improving client store conversions.
+              </li>
+              <li>
+                <strong>Database &amp; Performance Engineering:</strong> Designed normalized MySQL schemas, high-efficiency stored procedures, and background queue workers in Laravel for automated email/SMS processing.
+              </li>
+              <li>
+                <strong>Agile Collaboration &amp; Code Quality:</strong> Spearheaded Git version control practices (GitLab/GitHub), executed comprehensive API testing with Postman, and fostered team collaboration.
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- EDUCATION -->
+        <article class="resume-section">
+          <h2 class="section-title">EDUCATION</h2>
+
+          <div class="edu-item">
+            <div class="edu-degree">Master of Computer Application (MCA)</div>
+            <div class="edu-school">Gujarat Technological University</div>
+            <div class="edu-meta">
+              <span><i class="fa-regular fa-calendar"></i> 2022 - 2024</span>
+              <span><i class="fa-solid fa-location-dot"></i> Gujarat, India</span>
+            </div>
+            <p class="edu-desc">
+              Advanced specialization in software architecture, PHP frameworks, Laravel, database design, and scalable application development.
+            </p>
+          </div>
+
+          <div class="edu-item">
+            <div class="edu-degree">Bachelor of Computer Application (BCA)</div>
+            <div class="edu-school">Veer Narmad South Gujarat University</div>
+            <div class="edu-meta">
+              <span><i class="fa-regular fa-calendar"></i> 2019 - 2022</span>
+              <span><i class="fa-solid fa-location-dot"></i> Surat, Gujarat</span>
+            </div>
+            <p class="edu-desc">
+              Strong core in computer science fundamentals, Object-Oriented PHP, data structures, relational databases, and modern web development.
+            </p>
+          </div>
+        </article>
+
+        <!-- TRAINING & COURSES -->
+        <article class="resume-section">
+          <h2 class="section-title">TRAINING / COURSES</h2>
+          <div class="training-grid">
+            <div class="training-card">
+              <div class="training-title">Full Stack Web Development</div>
+              <div class="training-sub">Laravel, Node.js &amp; REST APIs</div>
+            </div>
+            <div class="training-card">
+              <div class="training-title">Workflow Automation (n8n)</div>
+              <div class="training-sub">Webhooks, Pipelines &amp; Integrations</div>
+            </div>
+            <div class="training-card">
+              <div class="training-title">Shopify Store Architecture</div>
+              <div class="training-sub">Liquid Templates &amp; E-Commerce APIs</div>
+            </div>
+            <div class="training-card">
+              <div class="training-title">Database Optimization</div>
+              <div class="training-sub">MySQL Stored Procedures &amp; Queues</div>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- =====================================================
+           RIGHT COLUMN: Key Achievements, Skills, Interests
+           (LANGUAGES REMOVED AS REQUESTED)
+           ===================================================== -->
+      <section class="column-right">
+
+        <!-- KEY ACHIEVEMENTS -->
+        <article class="resume-section">
+          <h2 class="section-title">KEY ACHIEVEMENTS</h2>
+
+          <div class="achievement-item">
+            <i class="fa-solid fa-circle-check achievement-icon"></i>
+            <div class="achievement-content">
+              <span class="achievement-title">Framework Migration &amp; Optimization</span>
+              <p class="achievement-desc">Successfully migrated enterprise legacy systems to modern CodeIgniter 4/Laravel, accelerating execution speed by 40%+.</p>
+            </div>
+          </div>
+
+          <div class="achievement-item">
+            <i class="fa-solid fa-bolt achievement-icon"></i>
+            <div class="achievement-content">
+              <span class="achievement-title">Automated n8n Ecosystems</span>
+              <p class="achievement-desc">Implemented automated multi-app n8n pipelines, seamlessly syncing webhooks, CRM records, and critical alerts.</p>
+            </div>
+          </div>
+
+          <div class="achievement-item">
+            <i class="fa-solid fa-cart-shopping achievement-icon"></i>
+            <div class="achievement-content">
+              <span class="achievement-title">Shopify E-Commerce Delivery</span>
+              <p class="achievement-desc">Constructed high-converting, mobile-first Shopify themes with tailored Liquid components and payment integrations.</p>
+            </div>
+          </div>
+
+          <div class="achievement-item">
+            <i class="fa-solid fa-database achievement-icon"></i>
+            <div class="achievement-content">
+              <span class="achievement-title">High-Efficiency Stored Procedures</span>
+              <p class="achievement-desc">Optimized high-volume database queries, automated PDF/Excel reports, and eliminated concurrency deadlocks.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- SKILLS (Zoe Thompson Box Grid Layout) -->
+        <article class="resume-section">
+          <h2 class="section-title">SKILLS</h2>
+
+          <div class="skills-grid-proper">
+            <div class="skill-box highlight">Laravel 10</div>
+            <div class="skill-box highlight">PHP (Core &amp; OOP)</div>
+            <div class="skill-box highlight">Shopify</div>
+            <div class="skill-box highlight">Automation (n8n)</div>
+            <div class="skill-box">Node.js &amp; Express</div>
+            <div class="skill-box">CodeIgniter 3/4</div>
+            <div class="skill-box">MySQL Database</div>
+            <div class="skill-box">Stored Procedures</div>
+            <div class="skill-box">RESTful APIs</div>
+            <div class="skill-box">OAuth 2.0 Security</div>
+            <div class="skill-box">React.js</div>
+            <div class="skill-box">JavaScript (ES6+)</div>
+            <div class="skill-box">Bootstrap 5</div>
+            <div class="skill-box">HTML5 &amp; CSS3</div>
+            <div class="skill-box">Payment Gateways</div>
+            <div class="skill-box">Queues &amp; Cron Jobs</div>
+            <div class="skill-box">Git &amp; GitHub/GitLab</div>
+            <div class="skill-box">Postman API Testing</div>
+            <div class="skill-box">WordPress</div>
+            <div class="skill-box">Database Migrations</div>
+          </div>
+        </article>
+
+        <!-- INTERESTS -->
+        <article class="resume-section">
+          <h2 class="section-title">INTERESTS</h2>
+
+          <div class="interest-item">
+            <div class="interest-title">Workflow Automation &amp; AI Tools</div>
+            <div class="interest-desc">Passionate about event-driven architectures, n8n automations, and AI agent productivity workflows.</div>
+          </div>
+
+          <div class="interest-item">
+            <div class="interest-title">System Architecture &amp; APIs</div>
+            <div class="interest-desc">Enjoys designing scalable backend patterns, micro-services, and clean API specifications.</div>
+          </div>
+
+          <div class="interest-item">
+            <div class="interest-title">Modern Web Trends &amp; UI/UX</div>
+            <div class="interest-desc">Following best practices in responsive design, accessibility, and high-performance frontend engineering.</div>
+          </div>
+        </article>
+
+      </section>
+
+    </div>
+
+    <!-- RESUME FOOTER -->
+    <footer class="resume-footer">
+      <span>Online Portfolio: <a href="index.html">abhayportfolio.site</a></span>
+      <span>Abhay Patel &bull; Web Developer</span>
+    </footer>
+
+  </main>
+
+  <script>
+    // Theme toggle synchronization in resume page
+    const resumeThemeToggle = document.getElementById('resumeThemeToggle');
+    if (resumeThemeToggle) {
+      resumeThemeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('abhay-portfolio-theme', newTheme);
+      });
+    }
+
+    // Direct PDF generator using html2pdf
+    function downloadDirectPDF() {
+      const element = document.getElementById('resume-container');
+      const opt = {
+        margin: [8, 10, 8, 10], // top, left, bottom, right in mm
+        filename: 'Abhay_Patel_Resume.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      // Show temporary loading indicator on button
+      const btn = event.currentTarget;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generating...';
+      btn.disabled = true;
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }).catch(err => {
+        console.error('PDF error:', err);
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        // Fallback to window.print() if html2pdf fails
+        window.print();
+      });
+    }
+  </script>
+</body>
+</html>
